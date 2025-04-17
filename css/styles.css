@@ -1,0 +1,355 @@
+:root {
+    /* Light mode (default) - Improved Contrast */
+    --bg-color: #FFFFFF; /* Pure white background */
+    --toolbox-bg: #FDFDFD; /* Slightly off-white */
+    --workspace-bg: #FFFFFF;
+    --output-bg: #FDFDFD; /* Match toolbox */
+    --math-block-color: #FFD166;
+    --accent-color: #05A880; /* Slightly darker green */
+    --text-color: #1A1A1A; /* Very dark grey, almost black */
+    --border-color: #D0D0D0; /* Darker border */
+    --header-bg: #FDFDFD;
+    --panel-header: #F0F0F0;
+    --console-bg: #F0F0F0; /* Lighter console */
+    --button-text: #1A1A1A; /* Dark text on light buttons */
+    --logo-color: #05A880;
+    --blockly-flyout-color: #FDFDFD;
+    --blockly-toolbox-color: #FDFDFD;
+    --blockly-workspace-color: #FFFFFF; /* Workspace specific bg */
+    --blockly-text-color: #1A1A1A; /* Dark text for Blockly */
+    --dot-color: #C0C0C0; /* Darker dots for better visibility */
+}
+
+[data-theme="dark"] {
+    /* Dark mode (Keep as is or adjust if needed) */
+    --bg-color: #1A1A1A;
+    --toolbox-bg: #2D2D2D;
+    --workspace-bg: #252525; /* Dark workspace */
+    --output-bg: #2D2D2D; /* Dark output panel */
+    --math-block-color: #FFD166;
+    --accent-color: #06D6A0;
+    --text-color: #F0F0F0;
+    --border-color: #444444;
+    --header-bg: #2D2D2D;
+    --panel-header: #333333;
+    --console-bg: #2A2A2A;
+    --button-text: #F0F0F0;
+    --logo-color: #06D6A0;
+    --blockly-flyout-color: #2D2D2D;
+    --blockly-toolbox-color: #333333;
+    --blockly-workspace-color: #252525; /* Dark workspace specific bg */
+    --blockly-text-color: #F0F0F0;
+    --dot-color: #555; /* Lighter dots on dark */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+header {
+    background-color: var(--header-bg);
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s, border-color 0.3s;
+    z-index: 20;
+    position: relative;
+}
+
+.logo {
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: var(--logo-color);
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+}
+
+button, select {
+    background-color: var(--toolbox-bg); /* Match panel backgrounds */
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.2s;
+    color: var(--button-text);
+}
+
+button:hover, select:hover {
+    border-color: var(--accent-color);
+}
+
+#runButton {
+    background-color: var(--accent-color);
+    color: white; /* White text on accent color */
+    border-color: var(--accent-color);
+}
+
+main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+.block-toolbox {
+    width: 60%;
+    background-color: var(--toolbox-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s, width 0.3s, border-color 0.3s;
+    position: relative;
+    z-index: 10;
+}
+
+#blocklyDiv {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+}
+
+#blocklyDiv::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+    background-size: 25px 25px;
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.panel-footer {
+    padding: 10px 15px;
+    background-color: var(--panel-header);
+    border-top: 1px solid var(--border-color);
+    transition: background-color 0.3s, border-color 0.3s;
+    flex-shrink: 0;
+}
+
+.panel-footer pre {
+    margin-top: 10px;
+    font-family: 'Fira Code', monospace;
+    background-color: var(--console-bg);
+    padding: 10px;
+    border-radius: 4px;
+    max-height: 150px;
+    overflow-y: auto;
+    color: var(--text-color);
+}
+
+.output-panel {
+    width: 40%;
+    background-color: var(--output-bg);
+    border-left: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s, width 0.3s, border-color 0.3s;
+    position: relative;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: var(--panel-header);
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s, border-color 0.3s;
+    flex-shrink: 0;
+}
+
+.console-output {
+    flex: 1;
+    padding: 10px;
+    font-family: 'Fira Code', monospace;
+    background-color: var(--console-bg);
+    overflow-y: auto;
+    white-space: pre-wrap;
+    transition: background-color 0.3s;
+    color: var(--text-color);
+    min-height: 100px;
+}
+
+.visual-output {
+    height: 50%;
+    padding: 10px;
+    overflow-y: auto;
+    border-top: 1px solid var(--border-color);
+    transition: background-color 0.3s, border-color 0.3s;
+    background-color: var(--workspace-bg);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-shrink: 0;
+}
+
+.visual-output canvas {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    border: 1px solid var(--border-color);
+    background-color: #fff;
+}
+
+footer {
+    padding: 8px 20px;
+    background-color: var(--header-bg);
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    transition: background-color 0.3s, border-color 0.3s;
+    z-index: 20;
+    position: relative;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Blockly customization */
+.blocklyMainBackground {
+    stroke: none !important;
+    fill: transparent !important;
+}
+
+.blocklyToolboxDiv {
+    background-color: var(--blockly-toolbox-color) !important;
+    color: var(--blockly-text-color) !important;
+    border-right: 1px solid var(--border-color);
+    transition: background-color 0.3s, border-color 0.3s;
+    z-index: 5;
+}
+
+.blocklyFlyout {
+    background-color: var(--blockly-flyout-color) !important;
+    z-index: 6;
+    position: relative;
+}
+
+.blocklyFlyoutBackground {
+    fill: var(--blockly-flyout-color) !important;
+    fill-opacity: 1 !important;
+}
+
+.blocklyFlyout .blocklyBlockCanvas {
+    transform: none !important;
+}
+
+.blocklyScrollbarBackground {
+    fill: var(--blockly-workspace-color) !important;
+}
+
+.blocklyTreeLabel {
+    color: var(--blockly-text-color) !important;
+}
+
+.blocklyTreeRoot {
+    background-color: var(--blockly-toolbox-color) !important;
+}
+
+/* Math block styles */
+.blocklyBlockCanvas .blocklyPath.math {
+    fill: var(--math-block-color) !important;
+}
+
+/* Resizable panels */
+.resizer {
+    width: 8px;
+    cursor: col-resize;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: var(--border-color);
+    opacity: 0.5;
+    transition: opacity 0.3s, background-color 0.3s;
+    z-index: 15;
+}
+
+.resizer:hover {
+    opacity: 1;
+}
+
+/* Drawing blocks styling in visual output */
+.drawing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    width: 100%;
+    max-width: fit-content;
+}
+
+.drawing-container canvas {
+    margin-bottom: 10px;
+}
+
+.download-btn {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.download-btn:hover {
+    opacity: 0.9;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    main {
+        flex-direction: column;
+    }
+    
+    .block-toolbox, .output-panel {
+        width: 100%;
+    }
+    
+    .block-toolbox {
+        height: 60%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .output-panel {
+        height: 40%;
+        border-left: none;
+    }
+    
+    .resizer {
+        width: 100%;
+        height: 8px;
+        cursor: row-resize;
+        position: absolute;
+        right: auto;
+        top: auto;
+        bottom: 0;
+        left: 0;
+    }
+    
+    #blocklyDiv::before {
+        background-size: 20px 20px;
+    }
+} 

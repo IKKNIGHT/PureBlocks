@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PureBlocks - Math-Centric Block Programming</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Blockly Library -->
+    <script src="https://unpkg.com/blockly/blockly_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/blocks_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/python_compressed.js"></script>
+    <script src="https://unpkg.com/blockly/msg/en.js"></script>
+    <!-- MathJax for equation rendering -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- Plotly for interactive plotting -->
+    // Replace the old plotly reference with:
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logo">PureBlocks</div>
+        <div class="controls">
+            <button id="runButton">Run ▶</button>
+            <button id="exportButton">Export</button>
+            <select id="exampleSelector">
+                <option value="">Load Example...</option>
+                <option value="fibonacci">Fibonacci Sequence</option>
+                <option value="pythagorean">Pythagorean Theorem Visualizer</option>
+                <option value="drawing">Simple Drawing</option>
+            </select>
+            <button id="themeSwitcher">🌙</button>
+        </div>
+    </header>
+
+    <main>
+        <div id="blocklyArea" class="block-toolbox">
+            <div id="blocklyDiv"></div>
+            <div class="panel-footer">
+                <button id="toggleCode">View Code</button>
+                <pre id="pythonCode" class="hidden"></pre>
+            </div>
+            <div class="resizer" id="mainResizer"></div>
+        </div>
+        <div id="outputPanel" class="output-panel">
+            <div class="panel-header">
+                <h3>Output</h3>
+                <button id="clearOutput">Clear</button>
+            </div>
+            <div id="consoleOutput" class="console-output"></div>
+            <div id="visualOutput" class="visual-output"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="status-bar">Ready</div>
+    </footer>
+
+    <!-- Core Application Scripts -->
+    <script src="js/blocks.js"></script>
+    <script src="js/generators.js"></script>
+    <script src="js/interpreter.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
