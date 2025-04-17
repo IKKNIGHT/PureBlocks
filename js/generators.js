@@ -251,18 +251,15 @@ if (typeof Blockly === 'undefined') {
       };
 
       Python.forBlock['controls_forEach'] = function(block) {
+        // For each loop.
         var variable0 = Python.nameDB_ ? 
           Python.nameDB_.getName(block.getFieldValue('VAR'), 'variable') : 
           block.getFieldValue('VAR');
         var argument0 = Python.valueToCode(block, 'LIST', Python.ORDER_NONE) || '[]';
         var branch = Python.statementToCode(block, 'DO') || Python.PASS;
-        
-        // Add list validation
-        var code = `if not isinstance(${argument0}, (list, tuple)):\n`;
-        code += Python.INDENT + `raise TypeError("Expected a list or tuple")\n`;
-        code += `for ${variable0} in ${argument0}:\n${branch}`;
+        var code = 'for ' + variable0 + ' in ' + argument0 + ':\n' + branch;
         return code;
-        };
+      };
 
       Python.forBlock['controls_for'] = function(block) {
         // For loop with range.

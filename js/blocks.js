@@ -103,7 +103,7 @@ if (typeof Blockly !== 'undefined') {
         init: function() {
             this.appendDummyInput()
                 .appendField('set drawing color')
-                .appendField(new Blockly.FieldColor('#ff0000'), 'COLOR');
+                .appendField(new Blockly.FieldColour('#ff0000'), 'COLOR');
             this.setPreviousStatement(true, null);
             this.setNextStatement(true, null);
             this.setColour('#06D6A0');
@@ -198,4 +198,4 @@ if (typeof Blockly !== 'undefined') {
             this.setColour('#06D6A0');
         }
     };
-}
+} 

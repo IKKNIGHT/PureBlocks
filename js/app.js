@@ -464,24 +464,145 @@ function escapeHTML(text) {
 }
 
 // Load example
-function loadExample(name) {
+function loadExample(example) {
+    if (!example) return;
+    
+    clearWorkspace();
+    
+    // Load the selected example
     try {
-        const xmlText = examples[name];
-        if (!xmlText) {
-            console.error(`Example '${name}' not found`);
-            return;
+        let xmlText = '';
+        switch (example) {
+            case 'fibonacci':
+                xmlText = '<xml xmlns="https://developers.google.com/blockly/xml"><block type="variables_set" id="fibonacci_init" x="50" y="50"><field name="VAR" id="a">a</field><value name="VALUE"><block type="math_number"><field name="NUM">0</field></block></value><next><block type="variables_set" id="fibonacci_init2"><field name="VAR" id="b">b</field><value name="VALUE"><block type="math_number"><field name="NUM">1</field></block></value><next><block type="controls_for" id="fibonacci_loop"><field name="VAR" id="i">i</field><value name="FROM"><block type="math_number"><field name="NUM">0</field></block></value><value name="TO"><block type="math_number"><field name="NUM">10</field></block></value><value name="BY"><block type="math_number"><field name="NUM">1</field></block></value><statement name="DO"><block type="text_print"><value name="TEXT"><block type="variables_get"><field name="VAR" id="b">b</field></block></value><next><block type="variables_set" id="fibonacci_calc"><field name="VAR" id="temp">temp</field><value name="VALUE"><block type="variables_get"><field name="VAR" id="b">b</field></block></value><next><block type="variables_set"><field name="VAR" id="b">b</field><value name="VALUE"><block type="math_arithmetic"><field name="OP">ADD</field><value name="A"><block type="variables_get"><field name="VAR" id="a">a</field></block></value><value name="B"><block type="variables_get"><field name="VAR" id="b">b</field></block></value></block></value><next><block type="variables_set"><field name="VAR" id="a">a</field><value name="VALUE"><block type="variables_get"><field name="VAR" id="temp">temp</field></block></value></block></next></block></next></block></next></block></statement></block></next></block></next></block></xml>';
+                break;
+            case 'pythagorean':
+                xmlText = '<xml xmlns="https://developers.google.com/blockly/xml"><block type="variables_set" id="pythagorean_a" x="50" y="50"><field name="VAR" id="a">a</field><value name="VALUE"><block type="math_number"><field name="NUM">3</field></block></value><next><block type="variables_set" id="pythagorean_b"><field name="VAR" id="b">b</field><value name="VALUE"><block type="math_number"><field name="NUM">4</field></block></value><next><block type="variables_set" id="pythagorean_c"><field name="VAR" id="c">c</field><value name="VALUE"><block type="math_arithmetic"><field name="OP">POWER</field><value name="A"><block type="math_arithmetic"><field name="OP">ADD</field><value name="A"><block type="math_arithmetic"><field name="OP">POWER</field><value name="A"><block type="variables_get"><field name="VAR" id="a">a</field></block></value><value name="B"><block type="math_number"><field name="NUM">2</field></block></value></block></value><value name="B"><block type="math_arithmetic"><field name="OP">POWER</field><value name="A"><block type="variables_get"><field name="VAR" id="b">b</field></block></value><value name="B"><block type="math_number"><field name="NUM">2</field></block></value></block></value></block></value><value name="B"><block type="math_number"><field name="NUM">0.5</field></block></value></block></value><next><block type="text_print"><value name="TEXT"><block type="text_join"><mutation items="7"></mutation><value name="ADD0"><block type="text"><field name="TEXT">a² + b² = c²: </field></block></value><value name="ADD1"><block type="variables_get"><field name="VAR" id="a">a</field></block></value><value name="ADD2"><block type="text"><field name="TEXT">² + </field></block></value><value name="ADD3"><block type="variables_get"><field name="VAR" id="b">b</field></block></value><value name="ADD4"><block type="text"><field name="TEXT">² = </field></block></value><value name="ADD5"><block type="variables_get"><field name="VAR" id="c">c</field></block></value><value name="ADD6"><block type="text"><field name="TEXT">²</field></block></value></block></value></block></next></block></next></block></next></block></xml>';
+                break;
+            case 'drawing':
+                xmlText = `
+<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="drawing_color" x="20" y="20">
+    <field name="COLOR">#ff0000</field>
+    <next>
+      <block type="drawing_circle">
+        <value name="X">
+          <block type="math_number">
+            <field name="NUM">100</field>
+          </block>
+        </value>
+        <value name="Y">
+          <block type="math_number">
+            <field name="NUM">100</field>
+          </block>
+        </value>
+        <value name="RADIUS">
+          <block type="math_number">
+            <field name="NUM">50</field>
+          </block>
+        </value>
+        <next>
+          <block type="drawing_color">
+            <field name="COLOR">#0000ff</field>
+            <next>
+              <block type="drawing_rectangle">
+                <value name="X">
+                  <block type="math_number">
+                    <field name="NUM">200</field>
+                  </block>
+                </value>
+                <value name="Y">
+                  <block type="math_number">
+                    <field name="NUM">100</field>
+                  </block>
+                </value>
+                <value name="WIDTH">
+                  <block type="math_number">
+                    <field name="NUM">100</field>
+                  </block>
+                </value>
+                <value name="HEIGHT">
+                  <block type="math_number">
+                    <field name="NUM">80</field>
+                  </block>
+                </value>
+                <next>
+                  <block type="drawing_color">
+                    <field name="COLOR">#00ff00</field>
+                    <next>
+                      <block type="drawing_line">
+                        <value name="X1">
+                          <block type="math_number">
+                            <field name="NUM">50</field>
+                          </block>
+                        </value>
+                        <value name="Y1">
+                          <block type="math_number">
+                            <field name="NUM">200</field>
+                          </block>
+                        </value>
+                        <value name="X2">
+                          <block type="math_number">
+                            <field name="NUM">250</field>
+                          </block>
+                        </value>
+                        <value name="Y2">
+                          <block type="math_number">
+                            <field name="NUM">200</field>
+                          </block>
+                        </value>
+                        <next>
+                          <block type="drawing_text">
+                            <value name="X">
+                              <block type="math_number">
+                                <field name="NUM">150</field>
+                              </block>
+                            </value>
+                            <value name="Y">
+                              <block type="math_number">
+                                <field name="NUM">50</field>
+                              </block>
+                            </value>
+                            <value name="TEXT">
+                              <block type="text">
+                                <field name="TEXT">Drawing Example</field>
+                              </block>
+                            </value>
+                          </block>
+                        </next>
+                      </block>
+                    </next>
+                  </block>
+                </next>
+              </block>
+            </next>
+          </block>
+        </next>
+      </block>
+    </next>
+  </block>
+</xml>`;
+                break;
         }
         
-        const xml = Blockly.Xml.textToDom(xmlText);
-        Blockly.Xml.clearWorkspaceAndLoadFromXml(xml, workspace);
-    } catch (error) {
-        console.error(`Error loading example (${name}):`, error);
-        // Show user-friendly error message
-        const consoleOutput = document.getElementById('consoleOutput');
-        if (consoleOutput) {
-            consoleOutput.innerHTML += `<span style="color: red;">Failed to load example: ${name}</span>\n`;
+        if (workspace && xmlText) {
+            const dom = Blockly.utils.xml.textToDom(xmlText);
+            Blockly.Xml.domToWorkspace(dom, workspace);
         }
+        
+        // Force a resize to make sure the workspace updates correctly
+        setTimeout(() => {
+            if (workspace) {
+                Blockly.svgResize(workspace);
+            }
+        }, 100);
+    } catch (error) {
+        console.error(`Error loading example (${example}):`, error);
+        consoleOutput.innerHTML += `<span style="color: red;">Error loading example: ${error.message}</span>\n`;
     }
+    
+    // Reset selector
+    exampleSelector.value = '';
 }
 
 // Clear the workspace
@@ -667,4 +788,4 @@ function loadWorkspace() {
         // Optionally clear corrupted data
         // localStorage.removeItem('pureblocks_workspace');
     }
-}
+} 

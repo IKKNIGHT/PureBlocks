@@ -11,20 +11,11 @@ function executeCode(code) {
         // Clear previous output
         clearVisualOutput();
         
-        // Reset drawing state
-        currentX = 0;
-        currentY = 0;
-        isRelativeMode = false;
-        
         // Create drawing canvas if not exists
         createDrawingCanvas();
         
+        // Add line to indicate code execution started
         addToConsole("Executing code...");
-        
-        // Validate code before execution
-        if (!code || code.trim() === '') {
-            throw new Error('No code to execute');
-        }
         
         // Execute the code
         interpretPythonLike(code);
@@ -151,39 +142,17 @@ function draw_circle(x, y, radius) {
     addToConsole(`Drew circle at (${x}, ${y}) with radius ${radius}`);
 }
 
-// Add these variables at the top of the file
-let currentX = 0;
-let currentY = 0;
-let isRelativeMode = false;
-
-// Add this new function
-function setCoordinateMode(relative) {
-    isRelativeMode = relative;
-    addToConsole(`Set coordinate mode to ${relative ? 'relative' : 'absolute'}`);
-}
-
-// Update draw_rectangle function
 function draw_rectangle(x, y, width, height) {
     if (!drawingContext) return;
     
-    let drawX = isRelativeMode ? currentX + Number(x) : Number(x);
-    let drawY = isRelativeMode ? currentY + Number(y) : Number(y);
-    
     drawingContext.beginPath();
-    drawingContext.rect(drawX, drawY, width, height);
+    drawingContext.rect(x, y, width, height);
     if (fillMode) {
         drawingContext.fill();
     }
     drawingContext.stroke();
-    
-    // Update current position
-    currentX = drawX + width;
-    currentY = drawY + height;
-    
-    addToConsole(`Drew rectangle at (${drawX}, ${drawY}) with dimensions ${width}x${height}`);
+    addToConsole(`Drew rectangle at (${x}, ${y}) with dimensions ${width}x${height}`);
 }
-
-// Similar updates needed for draw_circle, draw_line, draw_polygon, and draw_arc functions
 
 function draw_line(x1, y1, x2, y2) {
     if (!drawingContext) return;
@@ -728,19 +697,4 @@ function evaluateExpression(expr, env) {
     } catch (error) {
         throw new Error(`Cannot evaluate expression: ${expr}`);
     }
-}
-
-function evaluateExpression(expr) {
-    try {
-        // Add string join operation handling
-        if (expr.includes('.join(')) {
-            const parts = expr.match(/\[(.*?)\]/)[1].split(',').map(x => x.trim());
-            return parts.join('');
-        }
-        
-        // Existing evaluation code...
-        return eval(expr);
-    } catch (error) {
-        throw new Error(`Cannot evaluate expression: ${expr}`);
-    }
-}
+} 
